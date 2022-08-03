@@ -95,7 +95,7 @@ namespace TestFromDeeplayComp.ViewModels
             int idProfileManager = 0;
             int idProfileWorkPersonal = 0;
             int idProfile = 0;
-            if (Collections.ManagersInfo.Count == 1 && Collections.WorkPersonals_Info.Count > 1)
+            if (Collections.ManagersInfo.Count == 1 && (Collections.WorkPersonals_Info.Count > 1 || Collections.WorkPersonals_Info.Count == 0 ))
             {
                 var employee = Collections.ManagersInfo[0];
                 LastNameEmployee = employee.LastNameManager;

@@ -28,6 +28,7 @@ namespace TestFromDeeplayComp.ViewModels
         #endregion
 
         #region Команды
+        // Удаление сотрудника
         public ICommand DeleteProfileCmd { get; }
         private bool CanDeleteProfileCmdExecute(object p) => true;
         private void OnDeleteProfileCmdExecuted(object p)
