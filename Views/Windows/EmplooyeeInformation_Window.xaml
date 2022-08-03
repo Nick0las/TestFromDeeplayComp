@@ -1,0 +1,475 @@
+﻿<Window x:Class="TestFromDeeplayComp.Views.Windows.EmplooyeeInformation_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:l="clr-namespace:TestFromDeeplayComp.Views.Windows"
+        xmlns:vm="clr-namespace:TestFromDeeplayComp.ViewModels"
+        xmlns:serv="clr-namespace:TestFromDeeplayComp.Services"
+        xmlns:cmd="clr-namespace:TestFromDeeplayComp.Commands"
+        Title="{Binding Tittle}" Height="600" Width="800" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:EmployeeInformation_VM/>
+    </Window.DataContext>
+    <DockPanel Background="LightSkyBlue">
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+            <Button Content="Закрыть" Height="30" Width="80"
+                    HorizontalAlignment="Right" 
+                    Margin="5"
+                    Background="Cyan"
+                    Foreground="Red"
+                    FontWeight="Bold"
+                    IsCancel="True">
+            </Button>            
+        </UniformGrid>
+        <Grid DockPanel.Dock="Left"
+              Background="LightSteelBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="WorkedDataGrid" Grid.Row="1"
+                      Margin="0,3,0,0"                      
+                      VerticalAlignment="Stretch"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      CanUserReorderColumns="False" 
+                      CanUserAddRows="False"
+                      CanUserResizeColumns="False"
+                      Visibility="Hidden"
+                      ItemsSource="{Binding Source={x:Static serv:Collections.WorkPersonals_Info}}"
+                      SelectedItem="{Binding SelectedWorkPersonal}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Имя"
+                                        Width="auto"                                        
+                                        Binding="{Binding FirstNameWorkPersonal}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Отчество"
+                                        Width="auto"
+                                        MinWidth="65"
+                                        Binding="{Binding MiddleNameWorkPersonal}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Фамилия"
+                                        Width="auto"
+                                        MinWidth="65"
+                                        Binding="{Binding LastNameWorkPersonal}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Должность раба"
+                                        Width="*"
+                                        Binding="{Binding PostWorkPersonal}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="ManagerDataGrid" Grid.Row="1"
+                      Margin="0,3,0,0"                      
+                      VerticalAlignment="Stretch"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      CanUserReorderColumns="False" 
+                      CanUserAddRows="False"
+                      CanUserResizeColumns="False"
+                      Visibility="Visible"
+                      ItemsSource="{Binding Source={x:Static serv:Collections.ManagersInfo}}"
+                      SelectedItem="{Binding SelectedManager}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Имя"
+                                        Width="auto"
+                                        Binding="{Binding FirstNameManager}"/>
+                    <DataGridTextColumn Header="Отчество"
+                                        Width="auto"
+                                        Binding="{Binding MiddleNameManager}"/>
+                    <DataGridTextColumn Header="Фамилия"
+                                        Width="auto"
+                                        Binding="{Binding LastNameManager}"/>
+                    <DataGridTextColumn Header="Должность мага"
+                                        Width="*"
+                                        Binding="{Binding PostManager}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
+        <Grid DockPanel.Dock="Right"
+              Background="LightSteelBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Left"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"
+                       Margin="30,3,0,3"
+                       Text="Рабочий персонал"/>
+            <CheckBox x:Name="CheckBoxWorker" Grid.Row="0"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Margin="3"                      
+                      Background="LightPink" Checked="CheckBoxWorker_Checked"/>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Left"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"
+                       Margin="30,3,0,3"
+                       Text="Управляющий персонал"/>
+            <CheckBox x:Name="CheckBoxManager" Grid.Row="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Margin="3"                      
+                      Background="LightSalmon" Checked="CheckBoxManager_Checked"/>
+            <Grid x:Name="GridManagerPesonal"
+                  Grid.Row="2"
+                  VerticalAlignment="Top"
+                  Visibility="Visible"
+                  Background="LightSteelBlue">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column" Value="0">
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Margin" Value="0,0,2,0"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="Grid.Column" Value="1">
+                                <Setter Property="Margin" Value="2,0,0,0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Фамилия"/>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Имя"/>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Отчество"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата рождения"/>
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           TextWrapping="Wrap"
+                           Text="Адрес"/>
+                <TextBlock Grid.Row="5"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Телефон"/>
+                <TextBlock Grid.Row="6"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Должность"/>
+                <TextBlock Grid.Row="7"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Тип контролера"/>
+                <TextBlock Grid.Row="8"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Подразделение"/>
+                <TextBlock Grid.Row="9"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата трудоустройства"/>
+                <TextBlock Grid.Row="10"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата окончания договора"/>
+                <TextBlock Grid.Row="11"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата увольнения"/>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.LastNameManager}"/>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.FirstNameManager}"/>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.MiddleNameManager}"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.BirthdayManager}"/>
+                <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.AdressManager}"/>
+                <TextBlock Grid.Row="5"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.PhoneNumberManager}"/>
+                <TextBlock Grid.Row="6"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.PostManager}"/>
+                <TextBlock Grid.Row="7"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.TypeControler}"/>
+                <TextBlock Grid.Row="8"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.DepartamentManager}"/>
+                <TextBlock Grid.Row="9"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.ManagerDateAdmission}"/>
+                <TextBlock Grid.Row="10"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedManager.ManagerEndDateContract}"/>
+                <TextBlock Grid.Row="11"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Foreground="Red"
+                           Text="{Binding SelectedManager.DateFired}"/>
+            </Grid>
+
+            <Grid x:Name="GridWorkerPesonal"
+                  Grid.Row="2"
+                  VerticalAlignment="Top"
+                  Visibility="Visible"
+                  Background="LightSteelBlue">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Grid.Column" Value="0">
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Margin" Value="0,0,2,0"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="Grid.Column" Value="1">
+                                <Setter Property="Margin" Value="2,0,0,0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Фамилия"/>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Имя"/>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Отчество"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата рождения"/>
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           TextWrapping="Wrap"
+                           Text="Адрес"/>
+                <TextBlock Grid.Row="5"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Телефон"/>
+                <TextBlock Grid.Row="6"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Должность"/>
+                <TextBlock Grid.Row="7"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата трудоустройства"/>
+                <TextBlock Grid.Row="8"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Ф.И.О. руководителя"/>
+                <TextBlock Grid.Row="11"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Подразделение"/>
+                <TextBlock Grid.Row="12"
+                           Grid.Column="0"
+                           Margin="10,0,0,0"
+                           Text="Дата увольнения:"/>
+                
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.LastNameWorkPersonal}"/>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.FirstNameWorkPersonal}"/>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.MiddleNameWorkPersonal}"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.BirthdayWorkPersonal}"/>
+                <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Margin="20,0,5,0"
+                           TextWrapping="Wrap"
+                           Text="{Binding SelectedWorkPersonal.AdressWorkPersonal}"/>
+                <TextBlock Grid.Row="5"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PhoneNumberWorkPersonal}"/>
+                <TextBlock Grid.Row="6"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PostWorkPersonal}"/>
+                <TextBlock Grid.Row="7"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.WorkPersonalDateAdmission}"/>
+                <TextBlock Grid.Row="8"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PersonalManagerFirstName}"/>
+                <TextBlock Grid.Row="9"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PersonalManagerMiddleName}"/>
+                <TextBlock Grid.Row="10"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PersonalManagerLastName}"/>
+                <TextBlock Grid.Row="11"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Text="{Binding SelectedWorkPersonal.PersonalManagerDepartament}"/>
+                <TextBlock Grid.Row="12"
+                           Grid.Column="1"
+                           Margin="20,0,0,0"
+                           Foreground="Red"
+                           Text="{Binding SelectedWorkPersonal.WorkPersonalDateFired}"/>
+            </Grid>
+
+            <Grid Grid.Row="3"
+                  Margin="5"
+                  Background="LightSteelBlue">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                                        
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0"
+                        Content="Изменить персональные данные"
+                        Height="30"
+                        Width="220"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="0,5,15,0"
+                        Command="{Binding EditManagerPersonalCommand}">
+                </Button>
+                <Button Grid.Row="0"
+                        Content="Изменить должностную информацию"
+                        Height="30"
+                        Width="220"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="0,45,15,0"
+                        Command="{Binding EditPostInformationCommand}">
+                </Button>
+
+                <Button Grid.Row="0"
+                        Content="Удалить сотрудника из БД"
+                        Height="30"
+                        Width="220"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="0,85,15,0"
+                        Command="{Binding DeletePersonalCommand}">
+                </Button>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

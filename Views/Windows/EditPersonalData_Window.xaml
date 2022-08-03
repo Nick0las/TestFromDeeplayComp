@@ -1,0 +1,162 @@
+﻿<Window x:Class="TestFromDeeplayComp.Views.Windows.EditPersonalData_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:l="clr-namespace:TestFromDeeplayComp.Views.Windows"
+        xmlns:vm="clr-namespace:TestFromDeeplayComp.ViewModels"
+        xmlns:serv="clr-namespace:TestFromDeeplayComp.Services"
+        Title="{Binding Tittle}" Height="289" Width="400" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False">
+    <Window.DataContext>
+        <vm:EditPersonalData_VM/>
+    </Window.DataContext>
+    <DockPanel Background="LightGreen"
+               Width="390">
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+            <Button Content="Отмена" Height="30" Width="80"
+                    HorizontalAlignment="Left" 
+                    Margin="10,5,0,5"
+                    IsCancel="True">
+            </Button>
+            <Button Content="Изменить" Height="30" Width="80" 
+                    HorizontalAlignment="Right" Margin="0,5,10,5"
+                    Command="{Binding EditPersonalDataCmd}">
+            </Button>
+        </UniformGrid>
+        <Grid DockPanel.Dock="Left"
+              Background="LightGray"
+              Width="390"
+              Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Фамилия:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox x:Name="TextBoxSurname" Grid.Row="0"
+                     Grid.Column="0"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="150"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding LastNameEmployee}"/>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Имя:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,10,0"
+                     Width="150"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding FirstNameEmployee}"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Отчество:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="1"
+                     Grid.Column="0"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="150"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding MiddleNameEmployee}"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="Дата рождения:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <DatePicker Grid.Column="1"
+                        Grid.Row="1"
+                        Margin="5,24,18,3"
+                        SelectedDate="{Binding BirthdayEmployee}"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Домашний адрес:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="2"
+                     Grid.ColumnSpan="2"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="335"                     
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding AdressEmployee}"/>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Номер телефона:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="3"
+                     Grid.ColumnSpan="2"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="335"                     
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding PhoneNumberEmployee}"/>
+        </Grid>
+    </DockPanel>
+</Window>

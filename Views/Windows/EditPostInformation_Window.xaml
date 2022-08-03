@@ -1,0 +1,258 @@
+﻿<Window x:Class="TestFromDeeplayComp.Views.Windows.EditPostInformation_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:l="clr-namespace:TestFromDeeplayComp.Views.Windows"
+        xmlns:vm="clr-namespace:TestFromDeeplayComp.ViewModels"
+        xmlns:serv="clr-namespace:TestFromDeeplayComp.Services"
+        xmlns:cmd="clr-namespace:TestFromDeeplayComp.Commands"
+        Title="{Binding Tittle}" Height="373" Width="400" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:EditPostInformation_VM/>
+    </Window.DataContext>
+    <DockPanel Background="LightGreen"
+               Width="390">
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="0,3">
+            <Button Content="Отмена" Height="30" Width="80"
+                    HorizontalAlignment="Left" 
+                    Margin="10,5,0,5"
+                    IsCancel="True">
+            </Button>
+            <Button Content="Добавить" Height="30" Width="80" 
+                    HorizontalAlignment="Right" Margin="0,5,10,5"
+                    Command="{Binding EditPositionDataCmd}">
+            </Button>
+        </UniformGrid>
+        <Grid DockPanel.Dock="Left"
+              Background="LightGray"
+              Width="390"
+              Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Фамилия:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="0"
+                     Grid.Column="0"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="150"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding Surname}"
+                     IsReadOnly="True"/>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Имя:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,10,0"
+                     Width="150"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding Name}"
+                     IsReadOnly="True"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Отчество:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBox Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="5,24,5,0"
+                     Width="300"
+                     FontSize="16"
+                     Foreground="DarkBlue"
+                     FontFamily="Arial"
+                     Text="{Binding MiddleName}"
+                     IsReadOnly="True"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Должность:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <ComboBox Grid.Row="2"
+                      Grid.Column="0"
+                      VerticalAlignment="Top"
+                      Margin="5,24,3,3"
+                      ItemsSource="{Binding Source={x:Static serv:Collections.PostsInfos}}"
+                      SelectedItem="{Binding SelectedPost}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NamePost}">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding IdPost}"/>
+                                        <TextBlock Text="{Binding TypeControler}"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                                </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="Отдел:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <ComboBox Grid.Row="2"
+                      Grid.Column="1"
+                      VerticalAlignment="Top"
+                      Margin="5,24,10,3"
+                      ItemsSource="{Binding Source={x:Static serv:Collections.Departaments}}"
+                      SelectedItem="{Binding SelectedDepartament}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NameDepartment}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Руководитель:"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,5,0"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <ComboBox Grid.Row="3"
+                      Grid.Column="0"
+                      VerticalAlignment="Top"
+                      Margin="5,24,3,3"
+                      ItemsSource="{Binding Source={x:Static serv:Collections.ManagersDepartaments}}"
+                      SelectedItem="{Binding SelectedUser}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding NameDepartament}">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding LastName}"/>
+                                        <TextBlock Text="{Binding FirstName}"/>
+                                        <TextBlock Text="{Binding MiddleName}"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                                </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Text="Дата приема на работу:"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="5,5,0,3"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <DatePicker Grid.Column="1"
+                        Grid.Row="3"
+                        Width="165"
+                        Margin="5,24,6,0"
+                        SelectedDate="{Binding DateAdmission}"/>
+
+            <TextBlock Grid.Row="4"
+                       Grid.ColumnSpan="2"
+                       Text="Дата окончания договора:"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="0,5,0,3"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <TextBlock Grid.Row="4"
+                       Grid.ColumnSpan="2"
+                       Text="(для должности 'Директор')"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="0,25,0,3"
+                       FontSize="13"
+                       Foreground="Red"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <DatePicker Grid.Column="1"
+                        Grid.Row="4"
+                        Width="165"
+                        Height="25"
+                        Margin="5,5,5,-10"
+                        SelectedDate="{Binding EndDateContract}" />
+            <TextBlock Grid.Row="5"
+                       Grid.ColumnSpan="2"
+                       Text="Дата увольнения:"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="0,5,0,3"
+                       FontSize="16"
+                       Foreground="DarkBlue"
+                       FontFamily="Arial"
+                       FontWeight="Bold"/>
+            <DatePicker Grid.Column="1"
+                        Grid.Row="5"
+                        Width="165"
+                        Height="25"
+                        Margin="5,0,5,20"
+                        SelectedDate="{Binding DateFired}" />
+        </Grid>
+    </DockPanel>
+</Window>
