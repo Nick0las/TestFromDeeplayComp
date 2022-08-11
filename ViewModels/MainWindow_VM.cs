@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using TestFromDeeplayComp.Commands;
@@ -53,11 +52,26 @@ namespace TestFromDeeplayComp.ViewModels
         }
 
 
+        // Открытие файла help
+        public ICommand OpenHelpFileCmd { get; }
+        private bool CanOpenHelpFileCmdExecute(object p) => true;
+        private void OnOpenHelpFileCmdExecuted(object p)
+        {
+            string pathProject = Environment.CurrentDirectory;
+            string pathToHelpFile = Path.GetFullPath(Path.Combine(pathProject, @"..\\..\\..\\Help\\HelpEditEmployee.chm"));
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = pathToHelpFile;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
+        }
+
+
 
         #endregion
 
         public MainWindow_VM() 
         {
+            OpenHelpFileCmd = new LamdaCommand(OnOpenHelpFileCmdExecuted, CanOpenHelpFileCmdExecute);
             DeleteProfileCmd = new LamdaCommand(OnDeleteProfileCmdExecuted, CanDeleteProfileCmdExecute);
             IDownloadProfileFromDB.ShowProfile(Collections.Users);
         }

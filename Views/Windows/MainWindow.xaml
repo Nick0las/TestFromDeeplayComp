@@ -75,7 +75,8 @@
                     FontFamily="Arial"
                     FontWeight="Medium"
                     FontSize="14"
-                    Content="О программе"/>
+                    Content="О программе"
+                    Command="{Binding OpenHelpFileCmd}"/>
         </Grid>
         <Grid DockPanel.Dock="Right"
               Grid.ShowGridLines ="False"
