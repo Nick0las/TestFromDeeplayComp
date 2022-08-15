@@ -58,7 +58,7 @@ namespace TestFromDeeplayComp.ViewModels
         private void OnOpenHelpFileCmdExecuted(object p)
         {
             string pathProject = Environment.CurrentDirectory;
-            string pathToHelpFile = Path.GetFullPath(Path.Combine(pathProject, @"..\\..\\..\\Help\\HelpEditEmployee.chm"));
+            string pathToHelpFile = Path.GetFullPath(Path.Combine(pathProject, @"..\\..\\..\\Help\\help.chm"));
             var proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = pathToHelpFile;
             proc.StartInfo.UseShellExecute = true;
@@ -69,7 +69,7 @@ namespace TestFromDeeplayComp.ViewModels
 
         #endregion
 
-        public MainWindow_VM() 
+        public MainWindow_VM()
         {
             OpenHelpFileCmd = new LamdaCommand(OnOpenHelpFileCmdExecuted, CanOpenHelpFileCmdExecute);
             DeleteProfileCmd = new LamdaCommand(OnDeleteProfileCmdExecuted, CanDeleteProfileCmdExecute);
